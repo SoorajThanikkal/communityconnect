@@ -383,7 +383,7 @@
         const sender_id = "{{ user.id|default:'0' }}";
         const protocol = window.location.protocol === "https:" ? "wss" : "ws";
         const ws = new WebSocket(`${protocol}://${window.location.host}/ws/com/`);
-    
+        console.log("ws",ws)
         ws.onopen = function() {
             console.log("WebSocket connection opened");
         };
