@@ -382,10 +382,11 @@
         const username = "{{ user.name|default:'Anonymous' }}";
         const sender_id = "{{ user.id|default:'0' }}";
         const protocol = window.location.protocol === "https:" ? "wss" : "ws";
-        const ws = new WebSocket(`${protocol}://${window.location.host}/ws/com/`);
+        const ws = new WebSocket('ws://communityconnect-lpeb.onrender.com/ws/com/');
         console.log("ws",ws)
         ws.onopen = function() {
             console.log("WebSocket connection opened");
+            console.log("ws",ws)
         };
     
         ws.onmessage = function(event) {
@@ -417,6 +418,7 @@
     
         ws.onclose = function() {
             console.log("WebSocket connection closed");
+            console.log("ws",ws)
         };
     
         function appendMessage(sender, message, messageId, senderId,timestamp) {

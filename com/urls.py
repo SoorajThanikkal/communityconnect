@@ -100,6 +100,8 @@ urlpatterns = [
     
     path('Addfeedback/', views.Addfeedback, name='Addfeedback'),
     
+    path('test-redis/', views.test_redis),
+    
 
 
 

@@ -13,9 +13,8 @@ import com.routing  # Now safe to import
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
-    "websocket": AuthMiddlewareStack(
-        URLRouter(
+    "websocket": URLRouter(
             com.routing.websocket_urlpatterns
         )
-    ),
 })
+print("ASGI application started.")

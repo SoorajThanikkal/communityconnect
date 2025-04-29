@@ -1305,6 +1305,18 @@ def chat_room(request):
     messages = ChatMessage.objects.all().order_by("-timestamp")[:50]
     return render(request, "com/chat_room.html", {"messages": messages, "user": user})
 
+import redis
+from django.http import HttpResponse
+import os
+
+def test_redis(request):
+    try:
+        r = redis.from_url(os.environ.get("REDIS_URL"))
+        r.ping()
+        return HttpResponse("Redis connection successful!")
+    except Exception as e:
+        return HttpResponse(f"Redis connection failed: {str(e)}")
+
 
 from django.shortcuts import render
 import pandas as pd
