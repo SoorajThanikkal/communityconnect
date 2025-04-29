@@ -124,3 +124,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'codeknight000@gmail.com'
 EMAIL_HOST_PASSWORD = 'xaaocijqzyrtjhmq'
 DEFAULT_FROM_EMAIL = 'codeknight000@gmail.com'
+# communityconnect/settings.py
+SECURE_SSL_REDIRECT = True  # Redirect HTTP to HTTPS
+SESSION_COOKIE_SECURE = True  # Cookies only sent over HTTPS
+CSRF_COOKIE_SECURE = True
