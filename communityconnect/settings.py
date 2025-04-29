@@ -62,11 +62,11 @@ CSRF_TRUSTED_ORIGINS = [
 
 
 # Channels configuration
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels.layers.InMemoryChannelLayer",  # For development
-#     },
-# }
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",  # For development
+    },
+}
 
 # CHANNEL_LAYERS = {
 #     "default": {
@@ -77,23 +77,23 @@ CSRF_TRUSTED_ORIGINS = [
 #     },
 # }
 
-import os
+# import os
 
-if os.environ.get("REDIS_URL"):
-    CHANNEL_LAYERS = {
-        "default": {
-            "BACKEND": "channels_redis.core.RedisChannelLayer",
-            "CONFIG": {
-                "hosts": [os.environ["REDIS_URL"]],
-            },
-        },
-    }
-else:
-    CHANNEL_LAYERS = {
-        "default": {
-            "BACKEND": "channels.layers.InMemoryChannelLayer",
-        },
-    }
+# if os.environ.get("REDIS_URL"):
+#     CHANNEL_LAYERS = {
+#         "default": {
+#             "BACKEND": "channels_redis.core.RedisChannelLayer",
+#             "CONFIG": {
+#                 "hosts": [os.environ["REDIS_URL"]],
+#             },
+#         },
+#     }
+# else:
+#     CHANNEL_LAYERS = {
+#         "default": {
+#             "BACKEND": "channels.layers.InMemoryChannelLayer",
+#         },
+#     }
 
 
 

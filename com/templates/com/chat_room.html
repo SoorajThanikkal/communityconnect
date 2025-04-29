@@ -416,8 +416,8 @@
             console.error("WebSocket error:", error);
         };
     
-        ws.onclose = function() {
-            console.log("WebSocket connection closed");
+        ws.onclose = function(event) {
+            console.log("WebSocket connection closed",event.code , event.reason);
             console.log("ws",ws)
         };
     
