@@ -57,6 +57,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+CSRF_TRUSTED_ORIGINS = [
+    "https://communityconnect-lvwj.onrender.com",
+]
+
 
 # Channels configuration
 # CHANNEL_LAYERS = {
