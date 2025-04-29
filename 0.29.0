@@ -1,0 +1,12 @@
+Collecting uvicorn
+  Downloading uvicorn-0.34.2-py3-none-any.whl (62 kB)
+     ---------------------------------------- 62.5/62.5 kB 1.7 MB/s eta 0:00:00
+Collecting click>=7.0
+  Downloading click-8.1.8-py3-none-any.whl (98 kB)
+     ---------------------------------------- 98.2/98.2 kB 5.5 MB/s eta 0:00:00
+Requirement already satisfied: h11>=0.8 in c:\users\sooraj\music\communityconnect\vir\lib\site-packages (from uvicorn) (0.14.0)
+Requirement already satisfied: typing-extensions>=4.0 in c:\users\sooraj\music\communityconnect\vir\lib\site-packages (from uvicorn) (4.12.2)
+Collecting colorama
+  Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Installing collected packages: colorama, click, uvicorn
+Successfully installed click-8.1.8 colorama-0.4.6 uvicorn-0.34.2
