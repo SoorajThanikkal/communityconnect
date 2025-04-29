@@ -57,7 +57,7 @@ DATABASES = {
     }
 }
 CSRF_TRUSTED_ORIGINS = [
-    "https://communityconnect-lpeb.onrender.com/",
+    "https://communityconnect-lpeb.onrender.com",
 ]
 
 
