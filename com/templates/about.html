@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="keywords" content="Community, Mentorship, Blood Donation, Skill Sharing, Volunteering" />
+  <meta name="description" content="Community Connect - Empowering individuals through mentorship, skill-sharing, and blood donation initiatives." />
+  <meta name="author" content="Community Connect Team" />
+
+  <title>About Us - Community Connect</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
+</head>
+
+<body class="sub_page">
+
+  <!-- About Section -->
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>About Community Connect</h2>
+            </div>
+            <p>
+              <p>
+                <strong style="color: #e93f1a;">Community Connect</strong> is more than just an AI-driven platform—it's a transformative ecosystem designed to bridge human potential through intelligent, meaningful connections. Our mission goes beyond simple networking; we're building a dynamic, purpose-driven community that harnesses technology to create real-world impact.
+             </p>
+                
+                <p>
+                At the heart of Community Connect lies a fundamental belief: <strong>Every Individual Has Unique Value</strong>. Our advanced AI algorithms do more than match skills—they recognize the nuanced intersections of professional expertise, personal passions, social consciousness, learning objectives, and collaborative potential.
+                </p>
+                
+                <p>
+                Key platform features include:
+                </p>
+                <ul>
+                    <li><strong>Smart Matching:</strong> Our AI helps connect people with similar skills and interests</li>
+                    <li><strong>Diverse Engagement Opportunities:</strong> Mentorship programs, volunteer coordination, knowledge sharing, and cause-driven collaborative projects</li>
+                    <li><strong>Impact-Driven Modules:</strong> Blood donation coordination, skill exchanges, community service initiatives, and professional development workshops</li>
+                </ul>
+                
+                <p>
+                We prioritize user safety through robust verification processes, comprehensive privacy controls, and transparent interaction guidelines. Our vision is to create a platform where geographic boundaries don't limit collaboration, individual skills find meaningful application, and personal growth becomes a collective journey.
+                </p>
+                
+                
+                
+            </p>
+            <a href="/register/" class="btn btn-success">Join Us</a>
+            <a href="javascript:window.history.back();" class="btn btn-primary">Go Back</a>
+          </div>
+        </div>
+        <div class="col-md-6"> 
+          <div class="img-box"> 
+            <img src="{% static 'images/community-connect.png' %}" 
+                 alt="Community Connect" 
+                 class="img-fluid rounded" 
+                 style="width: 150%; max-width: 250%; height: auto; transform: scale(0.9);">
+        
+                 <div class="text-start mt-3 ml-6" style="margin-right: -100px; margin-left: 180px;"> 
+
+              <!-- Added text-start to align left -->
+              <p style="font-size: 1.5rem; font-weight: bold;">
+                Your Contribution, Our Collective Growth
+            </p>
+            
+                
+                <p>
+                    Whether you're a seasoned professional, a passionate volunteer, or someone eager to make a difference, 
+                    <strong>Community Connect</strong> provides the platform, tools, and supportive environment to turn your potential into tangible impact.
+                </p>
+                
+                <p class="text-center" style="color: #e93f1a; font-size: 1.5rem; font-weight: bold;">
+                  <strong>Join Us. Connect. Contribute. Transform.</strong>
+              </p>
+            </div>
+        </div>  
+      </div>
+        
+      </div>
+
+      <!-- Activities Section -->
+      <div class="row mt-5">
+        <div class="col-md-4 text-center">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwTjEPjBaTiy5o_dVx2_mmgJs3jTmfHEaxzg&s" 
+               alt="Blood Donation" class="img-fluid rounded">
+          <h4 class="mt-3">Blood Donation</h4>
+          <p>Join our network of voluntary blood donors and help save lives.</p>
+        </div>
+        <div class="col-md-4 text-center">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlD2uauf0P7ABwLWWHHcr7__ygEqsTD0eekg&s" 
+               alt="Mentorship" class="img-fluid rounded">
+          <h4 class="mt-3">Mentorship & Guidance</h4>
+          <p>Share your knowledge and guide someone towards a better future.</p>
+        </div>
+        <div class="col-md-4 text-center">
+          <img src= "{% static 'images/skillsharing.jpg' %}"
+               alt="Skill Sharing" class="img-fluid rounded">
+          <h4 class="mt-3">Skill Sharing</h4>
+          <p>Empower others by teaching valuable skills and expertise.</p>
+        </div>
+      
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <section class="container-fluid footer_section">
+    <p>
+      Copyright &copy; 2025 Community Connect. All Rights Reserved.
+    </p>
+  </section>
+
+  <!-- JavaScript Files -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

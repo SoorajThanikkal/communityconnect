@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar {
+            background-color: #d32f2f;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .activity-card {
+            background: linear-gradient(135deg, #ffe0e0, #ffb3b3);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 20px;
+            text-align: center;
+        }
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .activity-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
+        .btn-danger {
+            background-color: #d32f2f;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .btn-danger:hover {
+            background-color: #b71c1c;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Moderator Hub</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Posts</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="">Sponsors' Posts</a></li>
+                            <li><a class="dropdown-item" href="#">Organizers' Posts</a></li>
+                            <li><a class="dropdown-item" href="#">Mentors' Posts</a></li>
+                            <li><a class="dropdown-item" href="#">Creators' Posts</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Requests</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-dark text-white" href="/logout/">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h2 class="text-center mb-4">Moderator Request List</h2>
+        <p class="text-center text-muted">Review and manage all uploaded requests.</p>
+        <div class="row">
+            {% for request in requests %}
+            <div class="col-md-6 mb-4">
+                <div class="activity-card">
+                    <img src="https://img.icons8.com/ios-filled/100/approval.png" alt="Request Icon">
+                    <h4>{{ request.title }}</h4>
+                    <p>{{ request.description }}</p>
+                    <small class="text-muted">Uploaded at: {{ request.uploaded_at }}</small>
+                    {% comment %} <form method="POST" action="{% url 'delete_request' request.id %}" class="mt-3">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form> {% endcomment %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="javascript:history.back()" class="btn btn-back">Back</a>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

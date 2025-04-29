@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Chat</title>
+    <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.9.0/dist/emoji-picker.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Background with a stylish image */
+        body {
+            background:   url('/static/images/home2.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        /* Chat container with a gradient effect */
+        .chat-container {
+            width: 50%;
+            max-width: 500px;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.8), rgba(102, 0, 255, 0.8));
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .chat-header {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .message {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 15px;
+            max-width: 75%;
+            word-wrap: break-word;
+            display: inline-block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .user-message {
+            background: #005eff;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .other-message {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            align-self: flex-start;
+        }
+
+        .input-container {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .send-btn {
+            padding: 12px 15px;
+            background: white;
+            color: #005eff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 16px;
+        }
+
+        /* Floating emoji button */
+        .emoji-btn {
+            padding: 10px;
+            background: white;
+            border-radius: 50%;
+            border: 2px solid #005eff;
+            cursor: pointer;
+            font-size: 18px;
+            margin-right: 5px;
+        }
+
+        /* Floating emoji picker */
+        emoji-picker {
+            position: absolute;
+            bottom: 70px;
+            right: 10px;
+            display: none;
+            z-index: 10;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }/* Global Styles */
+        body {
+            font-family: "Georgia", sans-serif;
+            background-image: url('https://img.freepik.com/premium-photo/businessman-hand-drawing-light-arrow-graph-icon-finance-success-business-background-diagram-growth-financial-chart-development-growing-economic-goal-achievement-symbol-marketing-strategy_79161-2290.jpg?w=996');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        /* Chat Container with Blur Effect */
+        .chat-container {
+            width: 500%;
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent */
+            backdrop-filter: blur(10px); /* Glass effect */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            color: white;
+        }
+        
+        /* Chat Box */
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Chat Messages */
+        .message {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+        
+        .user-message {
+            background: #007bff;
+            color: white;
+            text-align: right;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .other-message {
+            background: #e5e5e5;
+            color: black;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        /* Input Box and Button */
+        .input-container {
+            display: flex;
+            margin-top: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            outline: none;
+            font-size: 16px;
+        }
+        
+        .chat-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .send-btn {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-left: 5px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .send-btn:hover {
+            background: #0056b3;
+        }
+        
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: rgb(255, 255, 255);
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 17px;
+            height: 3vh;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #45a049;
+        }
+        
+        /* Back Button */
+        .back-button {
+            width: 96%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+        
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Forgot Password Link */
+        .forgot-password {
+            color: rgb(224, 0, 0);
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            padding: 8px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            position: relative;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-40%);
+        }
+        
+        .forgot-password:hover {
+            color: #ffffff;
+            text-decoration: underline;
+            box-shadow: 0 2px 10px rgba(255, 25, 0, 0.5);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 90%;
+            }
+        
+            .chat-box {
+                height: 300px;
+            }
+        
+            .form-group input {
+                height: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .chat-container {
+                width: 95%;
+            }
+        
+            .chat-box {
+                height: 250px;
+            }
+        }
+        
+
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">🌍 Community Chat</div>
+        <div class="chat-box" id="chat-box"></div>
+        
+        <!-- Floating emoji picker -->
+        <emoji-picker id="emoji-picker"></emoji-picker>
+
+        <div class="input-container">
+            <button id="back-btn" class="back-btn">🔙</button>
+
+            {% comment %} <button id="emoji-btn" class="emoji-btn">😀</button> {% endcomment %}
+            <input type="text" id="message-input" class="chat-input" placeholder="Type a message...">
+            <button id="send-btn" class="send-btn">📤</button>
+        </div>
+    </div>
+
+    <script>
+
+        document.getElementById("back-btn").addEventListener("click", () => {
+            window.history.back(); // Goes to previous page
+        });
+
+        // WebSocket connection
+        const chatBox = document.getElementById("chat-box");
+        const messageInput = document.getElementById("message-input");
+        const sendButton = document.getElementById("send-btn");
+        const emojiPicker = document.getElementById("emoji-picker");
+        const emojiBtn = document.getElementById("emoji-btn");
+    
+        const username = "{{ user.name|default:'Anonymous' }}";
+        const sender_id = "{{ user.id|default:'0' }}";
+        const ws = new WebSocket("ws://" + window.location.host + "/ws/com/");
+    
+        ws.onopen = function() {
+            console.log("WebSocket connection opened");
+        };
+    
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            console.log("Received from server:", data);
+    
+            if (data.error) {
+                console.error("Error from server:", data.error);
+                return;
+            }
+    
+            if (data.action === "load_messages") {
+                // Load existing messages on connection
+                data.messages.forEach(msg => {
+                    appendMessage(msg.sender_name, msg.message, msg.messageId, msg.sender_id, msg.timestamp); // Pass timestamp
+                });
+            } else if (data.message && data.sender_name) {
+                // Handle new incoming messages
+                appendMessage(data.sender_name, data.message, data.messageId, data.sender_id, data.timestamp); // Pass timestamp
+            } else if (data.action === "delete") {
+                // Handle message deletion
+                removeMessage(data.messageId);
+            }
+        };
+    
+        ws.onerror = function(error) {
+            console.error("WebSocket error:", error);
+        };
+    
+        ws.onclose = function() {
+            console.log("WebSocket connection closed");
+        };
+    
+        function appendMessage(sender, message, messageId, senderId,timestamp) {
+            const messageElement = document.createElement("div");
+            messageElement.setAttribute("data-message-id", messageId);
+            messageElement.classList.add("message");
+    
+            const messageText = document.createElement("span");
+            const time = new Date(timestamp).toLocaleTimeString(); // Convert ISO timestamp to readable time
+            messageText.textContent = `${sender}: ${message} (${time})`; // Include timestamp
+            messageElement.appendChild(messageText);
+    
+            if (sender === username) {
+                messageElement.classList.add("user-message");
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "🗑️";
+                deleteButton.classList.add("delete-btn");
+                deleteButton.onclick = function() {
+                    deleteMessage(messageId);
+                };
+                messageElement.appendChild(deleteButton);
+            } else {
+                messageElement.classList.add("other-message");
+            }
+    
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    
+        function removeMessage(messageId) {
+            const messageElement = document.querySelector(`[data-message-id="${messageId}"]`);
+            if (messageElement) {
+                messageElement.remove();
+            }
+        }
+    
+        function deleteMessage(messageId) {
+            ws.send(JSON.stringify({
+                action: "delete",
+                messageId: messageId,
+                sender_id: sender_id
+            }));
+        }
+    
+        sendButton.addEventListener("click", function() {
+            sendMessage();
+        });
+    
+        messageInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message !== "") {
+                ws.send(JSON.stringify({
+                    action: "send_message",
+                    message: message,
+                    sender_id: sender_id
+                }));
+                messageInput.value = "";
+            }
+        }
+    
+        emojiBtn.addEventListener("click", () => {
+            emojiPicker.style.display = emojiPicker.style.display === "none" ? "block" : "none";
+        });
+    
+        emojiPicker.addEventListener("emoji-click", event => {
+            messageInput.value += event.detail.unicode;
+        });
+    </script>
+    
+    <style>
+        /* Add styling for delete button */
+        .delete-btn {
+            margin-left: 10px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .delete-btn:hover {
+            color: #ff4444;
+        }
+
+        .back-btn {
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-right: 8px;
+            transition: background-color 0.2s;
+        }
+        
+        .back-btn:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizers Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar {
+            background-color: #009688;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .event-card {
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        .status-active {
+            background-color: #28a745;
+            color: white;
+        }
+        .status-pending {
+            background-color: #ffc107;
+            color: black;
+        }
+        .quick-stats {
+            background: linear-gradient(135deg, #009688, #009688);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .checklist-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .resource-link {
+            text-decoration: none;
+            color: #009688;
+            font-weight: bold;
+        }
+        .resource-link:hover {
+            color: #009688;
+        }
+        .calendar-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(18, 37, 45, 0.1);
+        }
+        .team-member {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(14, 19, 23, 0.1);
+        }
+        .team-member img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Organizers Hub</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/modprofile/">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/viewrequests/">Requests</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-danger text-white" href="/logout/">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <h4>5</h4>
+                    <p>Active Events</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>120</h4>
+                    <p>Participants</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>8</h4>
+                    <p>Team Members</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>95%</h4>
+                    <p>Success Rate</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Event Management Section -->
+            <div class="col-md-8">
+                <h3>Current Events</h3>
+                <div class="event-card card mb-3">
+                    <div class="card-body">
+                        <span class="status-badge status-active">Active</span>
+                        <h5 class="card-title">Community Meetup 2024</h5>
+                        <p class="card-text">Monthly gathering for community members to network and share experiences.</p>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-success" style="width: 75%">75% Complete</div>
+                        </div>
+                        <button class="btn btn-primary">Manage Event</button>
+                    </div>
+                </div>
+
+                <div class="event-card card">
+                    <div class="card-body">
+                        <span class="status-badge status-pending">Pending</span>
+                        <h5 class="card-title">Skill-Share Workshop</h5>
+                        <p class="card-text">Workshop focused on sharing professional skills among community members.</p>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-warning" style="width: 30%">30% Complete</div>
+                        </div>
+                        <button class="btn btn-primary">Manage Event</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Checklist -->
+            <div class="col-md-4">
+                <h3>Event Checklist</h3>
+                <div class="checklist-item">
+                    <input type="checkbox" id="venue">
+                    <label for="venue">Book Venue</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="speakers">
+                    <label for="speakers">Confirm Speakers</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="catering">
+                    <label for="catering">Arrange Catering</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="promotion">
+                    <label for="promotion">Marketing & Promotion</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Useful Resources</h3>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="resource-link">📋 Event Planning Templates</a></li>
+                            <li><a href="#" class="resource-link">📚 Organization Guidelines</a></li>
+                            <li><a href="#" class="resource-link">🎯 Best Practices Guide</a></li>
+                            <li><a href="#" class="resource-link">📅 Calendar Management Tips</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Collaboration -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Team Members</h3>
+                        <div class="team-member">
+                            <img src="/api/placeholder/40/40" alt="Team Member">
+                            <div>
+                                <strong>John Doe</strong>
+                                <p class="mb-0">Event Coordinator</p>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <img src="/api/placeholder/40/40" alt="Team Member">
+                            <div>
+                                <strong>Jane Smith</strong>
+                                <p class="mb-0">Logistics Manager</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

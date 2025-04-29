@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mentors Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      background-color: #009688;
+    }
+    .navbar-brand, .nav-link {
+      color: white !important;
+    }
+    .quick-stats {
+      background: linear-gradient(135deg, #009688, #004d40);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    .section-card {
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .resource-item {
+      height: 100%;
+      padding: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .resource-item:hover {
+      transform: translateY(-5px);
+    }
+    .modal-xl {
+      max-width: 50%;
+    }
+    .modal-header {
+      background-color: #009688;
+      color: white;
+    }
+    .modal-footer .btn {
+      background-color: #009688;
+      border: none;
+    }
+    .modal-footer .btn:hover {
+      background-color: #00796b;
+    }
+    .modal-body ul, .modal-body ol {
+      padding-left: 1.2rem;
+    }
+
+    .star {
+      font-size: 1.2rem;
+      color: #f0f41b;
+  }
+  .star.filled {
+      color: #f7c948; /* Bootstrap-like yellow */
+  }
+   .feedback-section h4 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #004d40;
+  }
+  .feedback-card {
+    padding: 20px;
+    background-color: #e0f2f1;
+    border-radius: 12px;
+    font-size: 1.1rem;
+  }
+  .feedback-stars {
+    font-size: 1.5rem;
+    color: #fbc02d;
+  }
+  .feedback-stars .star {
+    margin-right: 2px;
+  }
+  .feedback-user {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #00695c;
+  }
+  .feedback-date {
+    font-size: 0.9rem;
+    color: #777;
+  }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">Mentors Hub</a>
+
+    <!-- Toggler button for small screens -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="/modprofile/">Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="/view_sessions/">View Sessions</a></li>
+        <li class="nav-item"><a class="nav-link btn btn-danger text-white" href="/logout/">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container mt-4">
+
+  <!-- Quick Stats -->
+  <div class="quick-stats text-center">
+    <div class="row">
+      <div class="col-md-4"><h4>{{ active_mentees }}</h4><p>Mentors & Experts</p></div>
+      <div class="col-md-4"><h4>{{ support_sessions_completed }}</h4><p>Support Sessions Completed</p></div>
+      <div class="col-md-4"><h4>{{ average_rating|floatformat:1 }}</h4><p>Mentor Rating</p></div>
+    </div>
+  </div>
+
+  <!-- Upcoming Mentoring Sessions -->
+  <div class="section-card">
+    <h4>📅 Uploaad Mentoring Sessions</h4>
+    <div class="d-grid gap-2 mb-3">
+      <a href="/session_mentor/" class="btn btn-success">Schedule New Session</a>
+      <a href="/view_sessions/" class="btn btn-outline-primary">My Sessions</a>
+    </div>
+    <div id="sessionList">
+      <!-- Dynamic sessions go here -->
+    </div>
+  </div>
+
+  <!-- Mentoring Tips -->
+  <h4 class="mt-4">🧠 Mentoring Tips & Best Practices</h4>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="resource-item text-center">
+        <h5>💬 Building Trust</h5>
+        <p>Foster a safe and welcoming space with empathy and active listening.</p>
+        <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#trustModal">Explore</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="resource-item text-center">
+        <h5>🎯 Goal Setting</h5>
+        <p>Guide mentees to create realistic, motivating, and trackable goals.</p>
+        <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#goalsModal">Learn More</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="resource-item text-center">
+        <h5>🧭 Giving Feedback</h5>
+        <p>Promote growth through kind, specific, and timely feedback.</p>
+        <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#feedbackModal">Read Tips</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback -->
+<div class="section-card mt-5">
+  <h4 class="feedback-section text-success border-bottom pb-2 mb-4">💬 Recent Feedback</h4>
+
+  <div class="row">
+    {% if feedback %}
+      {% for feed in feedback %}
+        <div class="col-md-6 mb-4">
+          <div class="p-4 border rounded shadow-sm bg-white h-100">
+            <div class="row justify-content-between align-items-start">
+              
+              <!-- Left: Name and Description -->
+              <div class="col-8">
+                <h5 class="feedback-user fw-bold fs-5 text-success mb-1">{{ feed.usser.name }}</h5>
+                <p class="mt-2 mb-1 fs-6 fst-italic text-primary">"{{ feed.description }}"</p>
+              </div>
+
+              <!-- Right: Stars and Date -->
+              <div class="col-4 text-end">
+                <div class="feedback-stars fs-5 mb-2">
+                  {% for i in "12345" %}
+                    {% if forloop.counter <= feed.rating %}
+                      <span class="star text-warning">&#9733;</span> {# Filled Star #}
+                    {% else %}
+                      <span class="star text-muted">&#9733;</span> {# Empty Star #}
+                    {% endif %}
+                  {% endfor %}
+                  <small class="text-muted ms-1">({{ feed.rating }})</small>
+                </div>
+                <small class="feedback-date text-muted">{{ feed.created_at }}</small>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="col-12 text-center">
+        <p class="text-muted fst-italic">No feedback available.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+
+</div>
+
+<!-- Modals -->
+<!-- TRUST Modal -->
+<div class="modal fade" id="trustModal" tabindex="-1" aria-labelledby="trustModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">💬 Building Trust in Mentoring</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li><strong>Active Listening:</strong> Focus completely on the speaker, avoid interrupting.</li>
+          <li><strong>Empathy:</strong> Understand and validate your mentee’s experiences and emotions.</li>
+          <li><strong>Consistency:</strong> Keep your word and follow through on what you say.</li>
+          <li><strong>Boundaries:</strong> Set clear expectations about availability, topics, and communication.</li>
+          <li><strong>Confidentiality:</strong> What’s shared stays within the session unless otherwise agreed.</li>
+        </ul>
+        <p class="mt-3">Trust grows with time and consistency. Be open, honest, and encouraging.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn text-white" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GOALS Modal -->
+<div class="modal fade" id="goalsModal" tabindex="-1" aria-labelledby="goalsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">🎯 Effective Goal Setting</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ol>
+          <li><strong>Start With Purpose:</strong> Ask, “What’s important to you right now?”</li>
+          <li><strong>SMART Framework:</strong> Specific, Measurable, Achievable, Relevant, Time-bound.</li>
+          <li><strong>Break It Down:</strong> Divide large goals into short-term actionable steps.</li>
+          <li><strong>Accountability:</strong> Set regular check-ins and track progress together.</li>
+          <li><strong>Celebrate Wins:</strong> Acknowledge progress to motivate further effort.</li>
+        </ol>
+        <p class="mt-3">Mentees thrive with direction and clarity. Be their guide to meaningful milestones.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn text-white" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEEDBACK Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">🧭 Giving Impactful Feedback</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li><strong>Start with Positivity:</strong> Highlight what’s working well first.</li>
+          <li><strong>Be Specific:</strong> Use clear, real examples instead of generalities.</li>
+          <li><strong>Timeliness:</strong> Deliver feedback as close to the event as possible.</li>
+          <li><strong>Two-Way:</strong> Invite their input—make it a conversation, not a lecture.</li>
+          <li><strong>Constructive Tone:</strong> Focus on improvement, not criticism.</li>
+        </ul>
+        <p class="mt-3">Effective feedback inspires reflection, action, and growth. Speak from a place of care and clarity.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn text-white" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

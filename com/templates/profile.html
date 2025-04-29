@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Community Connect</title>
+    <style>
+        :root {
+            --primary-color: #009688;
+            --secondary-color: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin: 0;
+        }
+
+        .user-info {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 40px auto;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 1000px;
+            width: 90%;
+            position: relative;
+            gap: 30px;
+        }
+
+        .user-info img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+        }
+
+        .user-info-details {
+            flex: 1;
+        }
+
+        .user-info-details h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .user-info-details p {
+            font-size: 1.1rem;
+            margin: 12px 0;
+            color: #444;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            padding: 10px 15px;
+            border-radius: 6px;
+        }
+
+        .button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #00796b;
+        }
+
+        .back-button {
+            background-color: #6c757d;
+            margin-left: 10px;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 18px;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            padding: 10px 0;
+            color: #fff;
+            text-align: center;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Welcome to Your Profile</h1>
+        <!-- Delete Account Button -->
+        <a href="{% url 'delete_useracc' %}" class="delete-button" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone!');">Delete Account</a>
+    </header>
+
+    <!-- User Profile Section -->
+    <div class="user-info">
+        {% if user.image %}
+            <img src="{{ user.image.url }}" alt="Profile Picture">
+        {% else %}
+            <img src="" alt="Default Profile Picture">
+        {% endif %}
+        
+        <div class="user-info-details">
+            <h2>{{ user.name }}</h2>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Age:</strong> {{ user.age }} years old</p>
+            <p><strong>Contact:</strong> {{ user.contact }}</p>
+            <p><strong>Gender:</strong> {{ user.gender }}</p>
+            <p><strong>Location:</strong> {{ user.location }}</p>
+            <p><strong>Blood Group:</strong> {{ user.bloodgroup }}</p>
+
+            <!-- Buttons -->
+            <a href="/edit_profile/" class="button">Edit Profile</a>
+            <a href="{% url 'userhome' %}" class="button back-button">Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Community Connect. All rights reserved.</p>
+    </div>
+
+</body>
+</html>

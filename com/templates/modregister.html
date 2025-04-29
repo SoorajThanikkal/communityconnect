@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderator Registration</title>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            background-image: url('https://c0.wallpaperflare.com/preview/807/1021/167/chart-graph-business-finance.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            margin: 100px;
+            padding:0px;
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            height:100vh;
+        } 
+
+        .container {
+            width: 450px;
+            background: rgba(255, 255, 255, 0.1); /* Transparent white background */
+            backdrop-filter: blur(1px); /* Blurs the background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .gender-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .button-group {
+            display: flex;
+            width:10px;
+            justify-content: space-between;
+            gap: 295px;
+            margin-top: 10px;
+        }
+
+        /* Ensuring that both buttons are styled the same */
+        .back-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="client-error error"></div>
+
+    <h2>Moderator Registration</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required placeholder="Enter your name">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your email">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required placeholder="Enter your password">
+
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirm_password" name="confirm_password" required placeholder="Re-enter your password">
+
+        <label for="contact">Contact</label>
+        <input type="tel" id="contact" name="contact" required placeholder="Enter your contact number">
+
+        <label for="bloodgroup">BloodGroup</label>
+        <select id="bloodgroup" name="bloodgroup" required>
+            <option value="" disabled selected>Select your blood group</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+        </select>
+
+        <label for="image">Profile Picture</label>
+        <input type="file" id="image" name="img" >
+
+        <label>Gender</label>
+        <div class="gender-group">
+            <label><input type="radio" name="gdr" value="male" required> Male</label>
+            <label><input type="radio" name="gdr" value="female"> Female</label>
+            <label><input type="radio" name="gdr" value="others"> Others</label>
+        </div>
+
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+            <option value="" disabled selected>Select a category</option>
+            <option value="mentors and experts">Mentors and Experts</option>
+            <option value="sponsors or donors">Sponsors or Donors</option>
+            <option value="creators and sharers">Creators and Sharers</option>
+           
+        </select>
+
+        <div class="button-group">
+            <button type="submit" class="btn">Register</button>
+            <a href="/" class="back-btn"> Back </a>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+        const errorDiv = document.querySelector('.client-error');
+        errorDiv.innerText = '';  // Clear previous errors
+
+        const hasNumber = /\d/.test(password);
+        const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        const isLongEnough = password.length >= 6;
+
+        if (!isLongEnough || !hasNumber || !hasSymbol) {
+            errorDiv.innerText = 'Password must be at least 6 characters and include a number and a symbol.';
+            e.preventDefault();
+        } else if (password !== confirmPassword) {
+            errorDiv.innerText = 'Passwords do not match.';
+            e.preventDefault();
+        }
+    });
+</script>
+
+
+</body>
+</html>

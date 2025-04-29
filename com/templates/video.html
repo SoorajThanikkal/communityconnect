@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Motivational Videos - Community Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .navbar {
+            background-color: #009688;
+        }
+        .navbar-brand {
+            color: white !important;
+        }
+        .content-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h3 {
+            color: #009688;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .video-item, .video-list {
+            margin-bottom: 30px;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+        iframe {
+            border-radius: 8px;
+        }
+        ul.video-links li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#">Community Connect</a>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="content-container">
+    <h3>🎥 Watch & Get Inspired</h3>
+
+    <div class="video-item mb-5">
+        <h5>James Clear – The Habits of Successful People</h5>
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/U_nzqnXWvSo" title="Atomic Habits by James Clear" allowfullscreen></iframe>
+    </div>
+
+    <div class="row">
+        <!-- Repeat this structure for all videos in cards -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/UNQhuFL6CWg" frameborder="0" allowfullscreen></iframe>
+                <div class="card-body">
+                    <h5 class="card-title">Start Your Day Right</h5>
+                    <p class="card-text">Best morning motivation with peaceful background and powerful affirmations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/ZXsQAXx_ao0" frameborder="0" allowfullscreen></iframe>
+                <div class="card-body">
+                    <h5 class="card-title">Just Do It - Motivation</h5>
+                    <p class="card-text">One of the most iconic motivational videos that reminds you to take action now.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/wfOD2y_AD_w" frameborder="0" allowfullscreen></iframe>
+                <div class="card-body">
+                    <h5 class="card-title">Brene Brown on Vulnerability</h5>
+                    <p class="card-text">TED Talk on the importance of vulnerability for connection and growth.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/26U_seo0a1g" frameborder="0" allowfullscreen></iframe>
+                <div class="card-body">
+                    <h5 class="card-title">Inside the Mind of a Master Procrastinator</h5>
+                    <p class="card-text">Tim Urban takes us on a hilarious and insightful journey through procrastination.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/fLJsdqxnZb0" frameborder="0" allowfullscreen></iframe>
+                <div class="card-body">
+                    <h5 class="card-title">The Power of Vulnerability</h5>
+                    <p class="card-text">Brené Brown shares deep insights on human connection and courage.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/3sK3wJAxGfs" frameborder="0" allowfullscreen></iframe>
+                <div class="card-body">
+                    <h5 class="card-title">Try Something New for 30 Days</h5>
+                    <p class="card-text">Matt Cutts encourages us to think about setting and achieving personal goals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- External Video Links -->
+    <div class="video-list mt-5">
+        <h5>💡 More Inspirational Talks</h5>
+        <ul class="video-links">
+            <li><a href="https://www.youtube.com/watch?v=3ev7GXzFTPg" target="_blank">This Is Why You Don’t Succeed – Simon Sinek</a></li>
+            <li><a href="https://www.youtube.com/watch?v=8jPQjjsBbIc" target="_blank">How to Stay Calm When You Know You’ll Be Stressed – Daniel Levitin</a></li>
+            <li><a href="https://www.youtube.com/watch?v=iCvmsMzlF7o" target="_blank">The Power of Vulnerability – Brené Brown</a></li>
+            <li><a href="https://www.youtube.com/watch?v=Cpc-t-Uwv1I" target="_blank">Why We Do What We Do – Tony Robbins</a></li>
+            <li><a href="https://www.youtube.com/watch?v=arj7oStGLkU" target="_blank">Inside the Mind of a Master Procrastinator – Tim Urban</a></li>
+            <li><a href="https://www.youtube.com/watch?v=F2hc2FLOdhI" target="_blank">How to Practice Emotional First Aid – Guy Winch</a></li>
+            <li><a href="https://www.youtube.com/watch?v=8KkKuTCFvzI" target="_blank">What Makes a Good Life? – Robert Waldinger</a></li>
+            <li><a href="https://www.youtube.com/watch?v=rrkrvAUbU9Y" target="_blank">The Puzzle of Motivation – Dan Pink</a></li>
+            <li><a href="https://www.youtube.com/watch?v=RcGyVTAoXEU" target="_blank">How to Make Stress Your Friend – Kelly McGonigal</a></li>
+            <li><a href="https://www.youtube.com/watch?v=5J6jAC6XxAI" target="_blank">Define Your Fears Instead of Your Goals – Tim Ferriss</a></li>
+            <li><a href="https://www.youtube.com/watch?v=9KiUq8i9pbE" target="_blank">The Science of Well-Being – Laurie Santos</a></li>
+            <li><a href="https://www.youtube.com/watch?v=TQMbvJNRpLE" target="_blank">How to Achieve Your Most Ambitious Goals – Stephen Duneier</a></li>
+            <li><a href="https://www.youtube.com/watch?v=fLJsdqxnZb0" target="_blank">Positive Thinking Hack – Shawn Achor</a></li>
+            <li><a href="https://www.youtube.com/watch?v=Lp7E973zozc" target="_blank">Stop Screwing Yourself Over – Mel Robbins</a></li>
+            <li><a href="https://www.youtube.com/watch?v=u4ZoJKF_VuA" target="_blank">Start With Why – Simon Sinek</a></li>
+        </ul>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <a href="/creators/" class="btn btn-back">← Back to Creators Page</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

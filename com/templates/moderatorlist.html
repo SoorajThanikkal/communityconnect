@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderator List</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #3498db 0%, #4dabf7 100%);
+            margin: 0;
+            padding: 25px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Header Styles */
+        h2 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 25px;
+            font-weight: 600;
+            font-size: 28px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 3px;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: white;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border: none;
+        }
+        
+        th:first-child {
+            border-top-left-radius: 8px;
+        }
+        
+        th:last-child {
+            border-top-right-radius: 8px;
+        }
+        
+        tbody tr {
+            transition: background-color 0.3s;
+        }
+        
+        tbody tr:hover {
+            background-color: #f5f9ff;
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* Profile Image Styles */
+        .profile-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 2px solid white;
+            transition: transform 0.3s;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.15);
+        }
+        
+        /* Status Indicator */
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .status-approved {
+            background-color: #e3f7ed;
+            color: #28a745;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #ffc107;
+        }
+        
+        /* Button Styles */
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(255, 77, 77, 0.2);
+        }
+        
+        .delete-btn:hover {
+            background-color: #e60000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 77, 77, 0.3);
+        }
+        
+        .back-btn {
+            display: block;
+            width: 150px;
+            margin: 30px auto 10px;
+            padding: 12px;
+            background-color: #555;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-btn:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Empty State */
+        .no-mods {
+            text-align: center;
+            font-size: 18px;
+            color: #888;
+            padding: 50px 0;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+                margin: 10px;
+            }
+            
+            th, td {
+                padding: 12px 8px;
+                font-size: 14px;
+            }
+            
+            .profile-image {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+    <script>
+        function confirmDelete(moderatorId) {
+            if (confirm("Are you sure you want to delete this moderator?")) {
+                window.location.href = `/delete_mods/${moderatorId}/`;
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Moderator List</h2>
+
+    {% if mod %}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Profile</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Gender</th>
+                    <th>Category</th>
+                    <th>Bloodgroup</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for moderator in mod %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                        {% if moderator.image %}
+                            <img src="{{ moderator.image.url }}" alt="Profile Image" class="profile-image">
+                        {% else %}
+                            <img src="https://via.placeholder.com/50" alt="No Image" class="profile-image">
+                        {% endif %}
+                    </td>
+                    <td>{{ moderator.name }}</td>
+                    <td>{{ moderator.email }}</td>
+                    <td>{{ moderator.contact }}</td>
+                    <td>{{ moderator.get_gender_display }}</td>
+                    <td>{{ moderator.get_category_display }}</td>
+                    <td>{{ moderator.bloodgroup }}</td>
+                    <td>
+                        {% if moderator.approval_status %}
+                            <span class="status status-approved">Approved</span>
+                        {% else %}
+                            <span class="status status-pending">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button class="delete-btn" onclick="confirmDelete({{ moderator.id }})">Remove</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="no-mods">No moderators found.</div>
+    {% endif %}
+
+    <!-- Back Button below the list -->
+    <button onclick="window.location.href='/adminhome/'" class="back-btn">← Back</button>
+
+
+</div>
+
+</body>
+</html>

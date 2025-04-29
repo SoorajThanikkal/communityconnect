@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Connect - User Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background-color: #009688;
+            padding: 20px 10px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        nav {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content */
+        .main-container {
+            padding: 30px 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .user-info h2 {
+            font-size: 2rem;
+            color: #009688;
+            margin-bottom: 10px;
+        }
+
+        .user-info p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* Activities Section */
+        .activities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .activity-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .activity-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .activity-card h3 {
+            font-size: 1.3rem;
+            color: #009688;
+            margin-bottom: 10px;
+        }
+
+        .activity-card p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .activity-card a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #009688;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .activity-card a:hover {
+            color: #005f56;
+        }
+
+        /* Moderator Request List */
+        .request-list {
+            margin-top: 40px;
+        }
+
+        .request-list h2 {
+            font-size: 2rem;
+            color: #009688;
+            margin-bottom: 20px;
+        }
+
+        .request-list p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .request-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .request-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .request-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .request-card h4 {
+            font-size: 1.25rem;
+            color: #009688;
+            margin-bottom: 10px;
+        }
+
+        .request-card p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .request-card small {
+            font-size: 0.875rem;
+            color: #777;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .request-actions .btn {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        
+        .request-actions .btn-accept {
+            background-color: #009688;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            display: block; /* Makes the button take full width */
+            width: 100%; /* Ensures responsiveness */
+            max-width: 200px; /* Keeps it a reasonable size */
+            margin: 0 auto; /* Centers the button */
+        }
+
+        .request-actions .btn-accept:hover {
+            background-color:rgb(2, 119, 107);
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+       
+
+        /* Chatbot Button */
+        .chatbot-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #009688;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #009688;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav a {
+                font-size: 0.9rem;
+                padding: 6px 12px;
+            }
+
+            .activity-card {
+                padding: 15px;
+            }
+
+            .activity-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .request-card {
+                padding: 15px;
+            }
+
+            .request-card h4 {
+                font-size: 1.2rem;
+            }
+        }
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 500;
+            padding: 12px 25px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 150px; /* Slightly larger minimum width */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+    
+        .nav-link.logout {
+            background-color: rgba(255, 87, 34, 0.8);
+        }
+    
+        .nav-link.logout:hover {
+            background-color: rgba(255, 87, 34, 1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+    <div class="header-container">
+        <h1 class="site-title">Welcome to Community Connect</h1>
+        <nav class="main-navigation">
+            <a href="/profile/" class="nav-link"><i class="fas fa-user me-2"></i>Profile</a>
+            <a href="/sessions/" class="nav-link"><i class="fas fa-calendar-check me-2"></i>Sessions</a>
+            <a href="/predict/" class="nav-link"><i class="fas fa-hand-holding-heart me-2"></i>Donations</a>
+            <a href="/view_creative_content/" class="nav-link"><i class="fas fa-palette me-2"></i>Creative Contents</a>
+            <a href="/chatbot/" class="nav-link"><i class="fas fa-comment-dots me-2"></i>Chatbot</a>
+            <a href="/Addfeedback/" class="nav-link"><i class="fas fa-star me-2 text-yellow-500"></i>Feedback</a>
+            <a href="/logout/" class="nav-link logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+        </nav>
+    </div>
+</header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- User Info -->
+        <div class="user-info">
+            <h2>Hello, {{ user_name }}!</h2>
+            <p>Welcome to Community Connect, where we link you to meaningful activities and opportunities to give back to society.</p>
+        </div>
+
+        <!-- Activities Section -->
+        <div class="activities">
+            <div class="activity-card">
+                <img src="https://img.icons8.com/color/96/training.png" alt="Skill Sharing">
+                <h3>Skill Sharing</h3>
+                <p>Connect with others to share and exchange skills, fostering personal and professional development within the community.</p>
+                <a href="https://survivershack.com/building-resilient-communities-through-skill-sharing">Learn More</a>
+            </div>
+            <div class="activity-card">
+                <img src="https://static.vecteezy.com/system/resources/previews/022/211/292/original/mental-health-icon-in-simple-black-design-isolated-on-white-background-vector.jpg" alt="Mental Well-being Support">
+                <h3>Mental Well-being Support</h3>
+                <p>Engage with peers and mentors who can provide support and guidance to help you maintain a healthy mindset.</p>
+                <a href="https://www.kidsmentalhealth.ca/2024/10/31/power-of-peers-how-peer-support-transforms-youth-mental-health/">Learn More</a>
+            </div>
+            <div class="activity-card">
+                <img src="https://www.eso.org/public/industry/cp/images/ILO.jpg" alt="Interest-based Networking">
+                <h3>Interest-based Networking</h3>
+                <p>Join groups and communities tailored to your interests and passions, and build meaningful connections.</p>
+                <a href="https://socialengine.com/blog/the-benefits-of-interest-based-communities/">Learn More</a>
+            </div>
+            <div class="activity-card">
+                <img src="https://www.pikpng.com/pngl/m/511-5111868_raised-hands-png-raised-hands-icon-png-clipart.png" alt="Volunteer Opportunities">
+                <h3>Volunteer Opportunities</h3>
+                <p>Participate in initiatives and contribute your skills to projects that make a difference in the community.</p>
+                <a href="https://learningmole.com/volunteering-giving-back-to-your-community/">Learn More</a>
+            </div>
+        </div>
+
+     <!-- Moderator Request List -->
+<div class="request-list">
+    <h2>Moderator Request List</h2>
+    <p>Review and manage all uploaded requests.</p>
+
+    {% csrf_token %}
+    <div class="row">
+        {% for request in requests %}
+        <div class="col-md-6 mb-4">
+            <div class="request-card" data-request-id="{{ request.id }}" data-deadline="{{ request.deadline|date:'Y-m-d H:i:s' }}">
+                <img src="https://img.icons8.com/ios-filled/100/approval.png" alt="Request Icon">
+                <h4>{{ request.title }}</h4>
+                <p>{{ request.description }}</p>
+                <small class="text-muted">Uploaded at: {{ request.uploaded_at }}</small>
+                <div class="request-actions">
+                    {% if request.id in accepted_requests %}
+                        <p><span class="btn btn-accept">Accepted</span></p>
+                    {% else %}
+                        <button class="btn btn-accept" onclick="window.location.href='{% url 'accept' request.id %}'">Accept</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+    <!-- Chatbot Button -->
+    <button class="chatbot-button" onclick="window.location.href='/chat_room/'">
+        <i class="fas fa-comment-alt"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Community Connect: A Platform for Skills, Support, and Growth</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function acceptRequest(requestId) {
+            fetch(`/accept-ajax/${requestId}/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Request Accepted!");
+                    document.getElementById(`request-${requestId}`).remove();
+                    window.location.href = `/accept/${requestId}/`;
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+
+    <script>    
+        document.addEventListener("DOMContentLoaded", function () {
+            const requestCards = document.querySelectorAll(".request-card");
+        
+            requestCards.forEach(card => {
+                const deadlineText = card.getAttribute("data-deadline"); // Get the deadline from data attribute
+                const deadline = new Date(deadlineText); // Convert to Date object
+                const now = new Date(); // Get current date
+        
+                if (deadline < now) {
+                    card.remove(); // Remove the request if the deadline has passed
+                }
+            });
+        });
+    </script>        
+    
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const requestCards = document.querySelectorAll(".request-card");
+            const currentTime = new Date();
+    
+            requestCards.forEach(card => {
+                const deadlineStr = card.getAttribute("data-deadline");
+                const deadline = new Date(deadlineStr);
+    
+                if (currentTime > deadline) {
+                    const requestId = card.getAttribute("data-request-id");
+    
+                    // Send AJAX request to delete from database
+                    fetch(`/delete_expired_request/${requestId}/`, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": "{{ csrf_token }}",
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            card.remove();  // Remove from UI
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
+                }
+            });
+        });
+    </script>
+    
+    
+</body>
+</html>

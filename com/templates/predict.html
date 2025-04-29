@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Eligibility</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+    <div class="bg-white rounded-lg shadow-lg max-w-3xl w-full overflow-hidden">
+        <div class="bg-[#009688] text-white text-center py-6 px-4 shadow-md">
+            <h2 class="text-3xl font-bold mb-2">Blood Donation Eligibility</h2>
+        </div>
+        
+        <div class="p-8">
+            <form method="post" class="grid grid-cols-2 gap-4">
+                {% csrf_token %}
+                
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Age</label>
+                    <input type="number" name="age" placeholder="Enter your age" class="w-full p-2 border rounded focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                </div>
+                
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Weight (kg)</label>
+                    <input type="number" name="weight" placeholder="Enter weight" class="w-full p-2 border rounded focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                </div>
+
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Hemoglobin (g/dL)</label>
+                    <input type="number" step="0.1" name="hemoglobin" placeholder="Enter hemoglobin" class="w-full p-2 border rounded focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                </div>
+
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Systolic BP</label>
+                    <input type="number" name="systolic_bp" placeholder="Enter systolic BP" class="w-full p-2 border rounded focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                </div>
+
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Diastolic BP</label>
+                    <input type="number" name="diastolic_bp" placeholder="Enter diastolic BP" class="w-full p-2 border rounded focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                </div>
+
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Recent Illness</label>
+                    <select name="recent_illness" class="w-full p-2 border rounded bg-white focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Chronic Disease</label>
+                    <select name="chronic_disease" class="w-full p-2 border rounded bg-white focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Medications</label>
+                    <select name="medications" class="w-full p-2 border rounded bg-white focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Recent Surgery</label>
+                    <select name="recent_surgery" class="w-full p-2 border rounded bg-white focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Pregnancy</label>
+                    <select name="pregnancy" class="w-full p-2 border rounded bg-white focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Last Donation (days)</label>
+                    <input type="number" name="last_donation_days" placeholder="Enter days" class="w-full p-2 border rounded focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                </div>
+
+                <div>
+                    <label class="block text-[#009688] font-medium mb-2">Travel to Malaria Zone</label>
+                    <select name="travel_malaria_zone" class="w-full p-2 border rounded bg-white focus:border-[#009688] focus:ring-1 focus:ring-[#009688]" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+
+                <div class="col-span-2 flex justify-between mt-4">
+                    <button type="button" onclick="window.history.back()" class="bg-gray-500 text-white p-2 rounded w-1/3 hover:bg-gray-600 transition duration-300">
+                        ⬅ Back
+                    </button>
+                    <button type="submit" class="bg-[#009688] text-white p-2 rounded w-1/3 hover:bg-opacity-90 transition duration-300">
+                        Check Eligibility
+                    </button>
+                </div>
+            </form>
+            
+            {% if prediction is not None %}
+                <div class="mt-6 text-center text-lg font-bold">
+                    {% if prediction == 1 %}
+                        <p class="text-green-600 text-xl">✅ You are Eligible to Donate Blood</p>
+                    {% else %}
+                        <p class="text-red-600 text-xl">❌ You are Not Eligible to Donate Blood</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

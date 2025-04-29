@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Mentoring Session</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-image: url('/api/placeholder/1200/800');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 100, 255, 0.1);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 650px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            border-left: 5px solid #0d6efd;
+        }
+        
+        .form-heading {
+            color: #0d6efd;
+            font-weight: 700;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 15px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        .btn {
+            width: 100%;
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+        }
+        
+        .btn-submit:hover {
+            background-color: #0b5ed7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+        
+        .btn-back:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-view {
+            background-color: #198754;
+            color: white;
+            border: none;
+        }
+        
+        .btn-view:hover {
+            background-color: #157347;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .mentoring-icon {
+            font-size: 48px;
+            color: #0d6efd;
+        }
+        
+        .button-group {
+            margin-top: 25px;
+        }
+        
+        .button-group .btn {
+            margin-bottom: 10px;
+        }
+        
+        .datetime-container {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .datetime-container .form-group {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="icon-container">
+        <i class="fas fa-chalkboard-teacher mentoring-icon"></i>
+    </div>
+    <h3 class="text-center form-heading">
+        <i class="fas fa-users me-2"></i>Post Mentoring Session
+    </h3>
+    
+    <form method="POST" id="mentoring-form">
+        {% csrf_token %}
+        
+        <div class="mb-4">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" id="title" class="form-control" placeholder="Enter session title" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter details about the mentoring session" required></textarea>
+        </div>
+
+        <div class="mb-4">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" name="location" id="location" class="form-control" placeholder="Enter session location">
+        </div>
+
+        <div class="mb-4">
+            <label for="dateTime" class="form-label">Date and Time</label>
+            <input type="datetime-local" name="dateTime" id="dateTime" class="form-control" required>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-submit">
+                <i class="fas fa-plus-circle me-2"></i>Post Mentoring Session
+            </button>
+            
+            <a href="{% url 'adminhome' %}" class="btn btn-back mt-3">
+                <i class="fas fa-arrow-left me-2"></i>Back
+            </a>
+            
+            <a href="{% url 'viewadposts2' %}" class="btn btn-view mt-3">
+                <i class="fas fa-eye me-2"></i>View Sessions
+            </a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('mentoring-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const formData = {
+            title: document.getElementById('title').value,
+            dateTime: document.getElementById('dateTime').value,
+            description: document.getElementById('description').value,
+            location: document.getElementById('location').value
+        };
+        
+        fetch('{% url "session_create" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Mentoring session created successfully!');
+                document.getElementById('mentoring-form').reset();
+            } else {
+                alert('Error creating mentoring session');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+</script>
+
+</body>
+</html>

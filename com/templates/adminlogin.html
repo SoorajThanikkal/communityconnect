@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            flex-direction: column;
+            padding: 20px;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 380px;
+            margin-bottom: 20px;
+        }
+        .login-container h2 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        .input-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            font-size: 1rem;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #ff7eb3;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .login-btn:hover {
+            background: #ff5891;
+        }
+        .back-btn {
+            padding: 12px 25px;
+            background: #ffffff;
+            color: #764ba2;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }  
+        .back-btn:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="email" placeholder="Enter your username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+    <a href="/" class="back-btn">Back to Home</a>
+</body>
+</html>

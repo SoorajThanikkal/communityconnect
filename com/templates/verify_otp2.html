@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://c0.wallpaperflare.com/preview/807/1021/167/chart-graph-business-finance.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 450px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(1px);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Verify OTP</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="otp" placeholder="Enter OTP" required>
+            </div>
+            <button type="submit" class="btn">Verify OTP</button>
+        </form>
+    </div>
+</body>
+</html>

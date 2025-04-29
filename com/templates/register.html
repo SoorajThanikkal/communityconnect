@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: "Arial", sans-serif;
+            background: linear-gradient(135deg,rgb(13, 24, 69),rgb(24, 39, 100),rgb(41, 56, 112),rgb(63, 79, 144), #5a6aac,rgb(118, 133, 194));
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        /* Container with neon border effect */
+        .container {
+            width: 550px;
+            background-color: #1e1e2f;
+            border-radius: 20px;
+            padding: 40px 30px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            margin: 40px 0;
+        }
+        
+        /* Outer neon border effect */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: linear-gradient(45deg, #00ffff, transparent, #ff00aa, transparent, #00ffff);
+            border-radius: 24px;
+            z-index: -1;
+            animation: border-animate 5s linear infinite;
+        }
+        
+        @keyframes border-animate {
+            0% {
+                background-position: 0 0;
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                background-position: 300% 0;
+                filter: hue-rotate(360deg);
+            }
+        }
+        
+        /* Inner border effect */
+        .container::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: #1e1e2f;
+            z-index: -1;
+        }
+        
+        /* Header styling */
+        .container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: 'Georgia', serif;
+        }
+        
+        /* Profile picture container */
+        .profile-picture-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .profile-picture {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-picture-placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 40px;
+        }
+        
+        /* Form group styling */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: rgb(255, 255, 255);
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: left;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .form-group input::placeholder,
+        .form-group select::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Password row styling */
+        .password-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .password-row .form-group {
+            flex: 1;
+        }
+        
+        /* Password strength indicator */
+        .password-strength {
+            height: 5px;
+            margin-top: 10px;
+            border-radius: 3px;
+            transition: all 0.3s;
+            background-color: #333;
+        }
+        
+        .weak {
+            background-color: #ff3333;
+            width: 33%;
+        }
+        
+        .medium {
+            background-color: #ffcc00;
+            width: 66%;
+        }
+        
+        .strong {
+            background-color: #00ffaa;
+            width: 100%;
+        }
+        
+        .password-feedback {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            margin-top: 8px;
+            text-align: left;
+            padding-left: 20px;
+        }
+        
+        /* Password visibility toggle */
+        .toggle-password {
+            position: absolute;
+            right: 20px;
+            top: 42px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+            background: none;
+            border: none;
+            outline: none;
+        }
+        
+        /* Custom file input styling */
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-label {
+            padding: 12px 20px;
+            border-radius: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            display: block;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .file-input-label:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: #00ffff;
+        }
+        
+        .file-input-container input[type="file"] {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .file-name {
+            margin-top: 8px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+        }
+        
+        /* Radio button styling */
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 5px;
+        }
+        
+        .radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 50px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(200, 210, 198, 0.2);
+        }
+        
+        .radio-label input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .radio-label .radio-custom {
+            height: 16px;
+            width: 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .radio-label input:checked ~ .radio-custom {
+            background-color: #00ffff;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+        
+        .radio-label input:checked ~ .radio-custom::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1e1e2f;
+        }
+        
+        .radio-label input:checked ~ span {
+            color: #00ffff;
+        }
+        
+        .radio-label:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Button styling */
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            background: #00ffff;
+            color: #121212;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 15px;
+        }
+        
+        .btn:hover {
+            background: #00fff0;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        /* Back button styling */
+        .back-button {
+            background: #00fff0;
+            box-shadow: 0 0 15px rgba(30, 164, 217, 0.5);
+        }
+        
+        .back-button:hover {
+            background: #00fff0;
+            box-shadow: 0 0 25px rgba(38, 215, 238, 0.8);
+        }
+        
+        /* Error message styling */
+        .error {
+            color: #ff3333;
+            font-size: 12px;
+            margin-top: 5px;
+            padding-left: 20px;
+            text-align: left;
+        }
+        
+        /* Responsive styling */
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+                padding: 30px 20px;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .password-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+
+       
+            #bloodgroup {
+              background-color:rgb(45, 45, 59);
+              color: white;
+            }
+          </style>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        
+        <div class="profile-picture-container">
+            <div id="profile-preview">
+                <div class="profile-picture-placeholder">👤</div>
+            </div>
+        </div>
+        
+        <form action="/register/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="password-row">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <button type="button" class="toggle-password" onclick="togglePassword('password')">👁️</button>
+                    <div class="password-strength" id="password-strength"></div>
+                    <div class="password-feedback" id="password-feedback">Password strength</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter your password" required>
+                    <button type="button" class="toggle-password" onclick="togglePassword('confirm_password')">👁️</button>
+                    <div id="password-match" class="error" style="display: none;">Passwords do not match</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact">Contact Number</label>
+                <input type="text" id="contact" name="contact" placeholder="Enter your contact number" pattern="[0-9]{10}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" placeholder="Enter your location" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="bloodgroup">Blood Group</label>
+                <select id="bloodgroup" name="bloodgroup" required>
+                    <option value="" disabled selected>Select your blood group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="img">Profile Image</label>
+                <div class="file-input-container">
+                    <label class="file-input-label" for="img">
+                        Choose a file
+                    </label>
+                    <input type="file" id="img" name="img" accept="image/*" required>
+                </div>
+                <div class="file-name" id="file-name">No file chosen</div>
+            </div>
+            
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="gdr" value="Male" required>
+                        <span class="radio-custom"></span>
+                        <span>Male</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="gdr" value="Female">
+                        <span class="radio-custom"></span>
+                        <span>Female</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="gdr" value="Other">
+                        <span class="radio-custom"></span>
+                        <span>Other</span>
+                    </label>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn">Register</button>
+            <button type="button" class="btn back-button" onclick="window.history.back();">Back</button>
+        </form>
+    </div>
+    
+    <script>
+        // Password visibility toggle
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+        
+        // Display file name and preview image when file is selected
+        document.getElementById('img').addEventListener('change', function() {
+            const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+            document.getElementById('file-name').textContent = fileName;
+            
+            // Preview the selected image
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const profilePreview = document.getElementById('profile-preview');
+                    profilePreview.innerHTML = `<img src="${e.target.result}" class="profile-picture" alt="Profile Picture">`;
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+        
+        // Password matching validation
+        document.getElementById('confirm_password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            const passwordMatch = document.getElementById('password-match');
+            
+            if (confirmPassword === '') {
+                passwordMatch.style.display = 'none';
+            } else if (password === confirmPassword) {
+                passwordMatch.style.display = 'none';
+                this.style.borderColor = '#00ffaa';
+            } else {
+                passwordMatch.style.display = 'block';
+                this.style.borderColor = '#ff3333';
+            }
+        });
+        
+        // Reset validation when password changes
+        document.getElementById('password').addEventListener('input', function() {
+            const confirmPassword = document.getElementById('confirm_password');
+            if (confirmPassword.value !== '') {
+                const passwordMatch = document.getElementById('password-match');
+                if (this.value === confirmPassword.value) {
+                    passwordMatch.style.display = 'none';
+                    confirmPassword.style.borderColor = '#00ffaa';
+                } else {
+                    passwordMatch.style.display = 'block';
+                    confirmPassword.style.borderColor = '#ff3333';
+                }
+            }
+            
+            // Password strength meter
+            const password = this.value;
+            const strengthMeter = document.getElementById("password-strength");
+            const feedback = document.getElementById("password-feedback");
+            const strength = checkPasswordStrength(password);
+            
+            // Update strength meter
+            strengthMeter.className = "password-strength";
+            if (password.length === 0) {
+                strengthMeter.className = "password-strength";
+                feedback.textContent = "Password strength";
+            } else if (strength === 1) {
+                strengthMeter.classList.add("weak");
+                feedback.textContent = "Weak: Add numbers and symbols";
+            } else if (strength === 2) {
+                strengthMeter.classList.add("medium");
+                feedback.textContent = "Medium: Make it longer";
+            } else {
+                strengthMeter.classList.add("strong");
+                feedback.textContent = "Strong password";
+            }
+        });
+        
+        // Check password strength function
+        // Update the checkPasswordStrength function in your template
+function checkPasswordStrength(password) {
+    let strength = 0;
+    let feedback = "";
+    
+    // Length check
+    if (password.length >= 8) strength += 1;
+    else feedback += "Password should be at least 6 characters. ";
+    
+    // Contains uppercase
+    
+    
+    // Contains lowercase
+    if (password.match(/[a-z]/)) strength += 1;
+    else feedback += "Include lowercase letters. ";
+    
+    // Contains number
+    if (password.match(/[0-9]/)) strength += 1;
+    else feedback += "Include numbers. ";
+    
+    // Contains special character
+    if (password.match(/[@#$%^&+=!]/)) strength += 1;
+    else feedback += "Include special characters (@, #, $, etc.).";
+    
+    // Update UI
+    const strengthMeter = document.getElementById("password-strength");
+    const feedbackElement = document.getElementById("password-feedback");
+    
+    strengthMeter.className = "password-strength";
+    
+    if (password.length === 0) {
+        feedbackElement.textContent = "Password strength";
+        return 0;
+    }
+    
+    if (strength <= 2) {
+        strengthMeter.classList.add("weak");
+        feedbackElement.textContent = feedback || "Weak password";
+        return 1;
+    } else if (strength <= 4) {
+        strengthMeter.classList.add("medium");
+        feedbackElement.textContent = "Medium strength - " + feedback;
+        return 2;
+    } else {
+        strengthMeter.classList.add("strong");
+        feedbackElement.textContent = "Strong password!";
+        return 3;
+    }
+}
+
+
+// Add this to your existing JavaScript in the template
+document.getElementById('password').addEventListener('input', function() {
+    const password = this.value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    
+    // Check password strength
+    checkPasswordStrength(password);
+    
+    // Check password match if confirm password field has value
+    if (confirmPassword) {
+        const passwordMatch = document.getElementById('password-match');
+        if (password === confirmPassword) {
+            passwordMatch.style.display = 'none';
+            document.getElementById('confirm_password').style.borderColor = '#00ffaa';
+        } else {
+            passwordMatch.style.display = 'block';
+            document.getElementById('confirm_password').style.borderColor = '#ff3333';
+        }
+    }
+});
+
+
+    </script>
+</body>
+</html>

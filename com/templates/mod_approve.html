@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderators List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .approved {
+            color: green;
+            font-weight: bold;
+        }
+        .pending {
+            color: red;
+            font-weight: bold;
+        }
+        .approve-btn,.reject-btn {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .approve-btn:hover {
+            background-color: #218838;
+        }
+
+        .reject-btn {
+            background-color: #dc3545;
+        }
+        .reject-btn:hover {
+            background-color: #c82333;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #555;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .back-btn:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Moderators List</h1>
+        <button onclick="history.back()" class="back-btn">← Back</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Category</th>
+                    <th>Approval Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mod in mods %}
+                <tr>
+                    <td>{{ mod.name }}</td>
+                    <td>{{ mod.email }}</td>
+                    <td>{{ mod.category }}</td>
+                    <td>
+                        {% if mod.approval_status %}
+                            <span class="approved">Approved</span>
+                        {% else %}
+                            <span class="pending">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if not mod.approval_status %}
+                            <a href="{% url 'mod_approve' mod.id %}" class="approve-btn">Approve</a>
+                            <a href="{% url 'mod_reject' mod.id %}" class="reject-btn">Reject</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accept Request</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Background Image for Blood Donation Theme */
+        body {
+            font-family: Arial, sans-serif;
+            background: url('/static/images/donation-bg.jpg') no-repeat center center;
+            background-size: cover;
+          
+        }
+
+        /* Main container with shadow and rounded edges */
+        .container {
+            max-width: 700px;
+            margin: 80px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header Styling */
+        h2 {
+            text-align: center;
+            color: #d32f2f;
+            font-weight: bold;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        /* Card Styling */
+        .card {
+            padding: 25px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Text Styling */
+        .info {
+            font-size: 18px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .info strong {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        /* Button Styling */
+        .btn-proceed {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            background: #d32f2f;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+        }
+
+        .btn-proceed:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(211, 47, 47, 0.3);
+        }
+
+        /* Back Button */
+        .back-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            background: #6c757d;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .back-button:hover {
+            background: #545b62;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Blood Donation Request Details</h2>
+        <div class="card">
+            
+            <p class="info" style="font-size: 25px;  font-weight: 500;">
+    <strong style="color: #d32f2f; font-weight: bold; font-size: 22px; ">
+        Need:
+    </strong> </strong> {{ request_data.title}}</p>
+            <p class="info"><strong>Location:</strong> {{ request_data.location }}</p>
+            <p class="info"><strong>Uploaded Date:</strong> {{ request_data.uploaded_at }}</p>
+            <p class="info"><strong>Deadline:</strong> {{ request_data.deadline }}</p>
+            <p class="info"><strong>Description:</strong> {{ request_data.description }}</p>
+            <a href="{% url 'proceed' request_data.id %}" class="btn-proceed">Proceed</a>
+
+            <button type="button" class="back-button" onclick="window.history.back();">Back</button>
+        </div>
+    </div>
+
+</body>
+</html>

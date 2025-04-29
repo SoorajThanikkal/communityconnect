@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moderator Profile - Community Connect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: #2a3d66;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+        }
+
+        /* User Info Section */
+        .user-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .user-info img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 20px;
+            border: 3px solid #007BFF;
+            object-fit: cover;
+        }
+
+        .user-info div {
+            max-width: 400px;
+        }
+
+        .user-info h2 {
+            font-size: 2rem;
+            margin: 10px 0;
+        }
+
+        .user-info p {
+            font-size: 1.1rem;
+            color: #777;
+        }
+
+        .user-info .profile-details {
+            margin-top: 20px;
+        }
+
+        .user-info .profile-details div {
+            margin-bottom: 10px;
+        }
+
+        /* Role Badge */
+        .role-badge {
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .role-organizer { background-color: #ff9800; color: white; }
+        .role-mentor { background-color: #4caf50; color: white; }
+        .role-sponsor { background-color: #3f51b5; color: white; }
+        .role-creator { background-color: #9c27b0; color: white; }
+        .role-community { background-color: #e91e63; color: white; }
+
+        /* Buttons */
+        .button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color:rgb(79, 193, 85);
+        }
+
+        .back-button {
+            background-color: #007BFF;
+            margin-left: 10px;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #2a3d66;
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Moderator Profile</h1>
+    </header>
+
+    <!-- Moderator Profile Section -->
+    {% load static %}
+
+    <div class="user-info">
+        <!-- Profile Image -->
+        {% if user.image %}
+        <img src="{% if user.image %}{{ user.image.url }}{% else %}{% static 'images/placeholder.png' %}{% endif %}" alt="Profile Picture">
+        {% else %}
+        <img src="{% static 'images/images.jpeg' %}" alt="Profile Picture">
+        {% endif %}
+
+        <!-- Profile Details -->
+        <div>
+            <h2>{{ user.name }}</h2>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Contact:</strong> {{ user.contact }}</p>
+            <p><strong>Gender:</strong> {{ user.gender }}</p>
+            <p><strong>Bloodgroup:</strong> {{ user.bloodgroup }}</p>
+            <p><strong>Category:</strong> {{ user.category }}</p>
+
+            <!-- Category Role Description -->
+            <div>
+                {% if user.category == "mentors and experts" %}
+                    <span class="role-badge role-mentor">Guidance & Support</span>
+                {% elif user.category == "sponsors or donors" %}
+                    <span class="role-badge role-sponsor">Donations & Volunteering</span>
+                {% elif user.category == "creators and sharers" %}
+                    <span class="role-badge role-creator">Content Creation</span>
+                {% endif %}
+            </div>
+            <p class="mt-3">{{ role_description }}</p>
+
+            <!-- Edit Profile and Back Buttons -->
+            <a href="/edit_modprofile/" class="button">Edit Profile</a>
+
+            <!-- Separate Back to Home Links Based on Category -->
+            {% if user.category == "mentors and experts" %}
+                <a href="{% url 'mentors' %}" class="button back-button">Back to Home</a>
+            {% elif user.category == "sponsors or donors" %}
+                <a href="{% url 'sponsors' %}" class="button back-button">Back to Home</a>
+            {% elif user.category == "creators and sharers" %}
+                <a href="{% url 'creators' %}" class="button back-button">Back to Home</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 Community Connect. All rights reserved.</p>
+    </div>
+
+</body>
+</html>

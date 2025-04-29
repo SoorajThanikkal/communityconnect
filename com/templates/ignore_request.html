@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ignore Request - Community Connect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background-color: #009688;
+            padding: 20px 10px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        nav {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content */
+        .main-container {
+            padding: 30px 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .request-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .request-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .request-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .request-card h4 {
+            font-size: 1.25rem;
+            color: #009688;
+            margin-bottom: 10px;
+        }
+
+        .request-card p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .request-card small {
+            font-size: 0.875rem;
+            color: #777;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .request-actions .btn {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .request-actions .btn-ignore {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+
+        .request-actions .btn-ignore:hover {
+            background-color: #e53935;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #009688;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Ignore Request</h1>
+        <nav>
+            <a href="/profile/">Profile</a>
+            <a href="/events/">Events</a>
+            <a href="/projects/">Community Projects</a>
+            <a href="/donations/">Donations</a>
+            <a href="/chatbot/">Chatbot</a>
+            <a href="/logout/">Logout</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <h2>Moderator Requests</h2>
+        <p>Review and manage all uploaded requests.</p>
+
+        <!-- Request Cards -->
+        <div class="row">
+            {% for request in requests %}
+            <div class="col-md-6 mb-4">
+                <div class="request-card" data-request-id="{{ request.id }}">
+                    <img src="https://img.icons8.com/ios-filled/100/approval.png" alt="Request Icon">
+                    <h4>{{ request.title }}</h4>
+                    <p>{{ request.description }}</p>
+                    <small class="text-muted">Uploaded at: {{ request.uploaded_at }}</small>
+                    <div class="request-actions">
+                        <button class="btn btn-ignore">Ignore</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Community Connect: A Platform for Skills, Support, and Growth</p>
+    </footer>
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Select all ignore buttons
+            const ignoreButtons = document.querySelectorAll(".btn-ignore");
+
+            ignoreButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const requestCard = this.closest(".request-card");
+                    const requestId = requestCard.dataset.requestId;
+
+                    // Send an AJAX request to the server to ignore the request
+                    fetch(`/ignore-request/${requestId}/`, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": document.querySelector("meta[name='csrf-token']").getAttribute("content"),
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Remove the request card from the DOM
+                            requestCard.remove();
+                        } else {
+                            alert("Failed to ignore the request.");
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
+                });
+            });
+        });
+    </script>
+</body>
+</html>
