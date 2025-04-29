@@ -1,7 +1,6 @@
 # communityconnect/settings.py
 from pathlib import Path
 import os
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-$t1(tpc$*uu3$upt!6#$($@6p7-$gy!6xc5#gm7%=z8*8e92=q'
@@ -85,17 +84,17 @@ if os.environ.get("REDIS_URL"):
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
             "CONFIG": {
-                "hosts": ["redis-cli --tls -u redis://default:ATcaAAIjcDE2ZmE1ZTBjYTE3N2E0YWQwOTE5Y2U1MTIyMmZhMmYzM3AxMA@tight-chimp-14106.upstash.io:6379"],
+                "hosts": [os.environ["REDIS_URL"]],
             },
         },
     }
 else:
-    # fallback for local dev
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels.layers.InMemoryChannelLayer",
         },
     }
+
 
 
 
